@@ -1,12 +1,13 @@
+import { useState } from "react"
+import './App.css'
+import ModernCalculator from "./components/ModernCalculator"
+import CopyText from "./components/CopyText"
 
-
-import React from 'react'
 
 const App = () => {
   return <section>
-    <h1>Hello This is the demo! file</h1>
-
-
+    {/* <ModernCalculator /> */}
+    <CopyText />
   </section>
 }
 
