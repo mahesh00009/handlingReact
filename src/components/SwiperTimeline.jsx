@@ -184,7 +184,13 @@ const SwiperTimeline = () => {
         <div className="relative min-h-screen overflow-hidden bg-black">
             <div 
                 className="absolute inset-0 opacity-30 transition-all duration-1000"
-                
+                style={{
+                    background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, 
+                        rgba(59, 130, 246, 0.15) 0%, 
+                        rgba(147, 51, 234, 0.1) 25%, 
+                        rgba(236, 72, 153, 0.05) 50%, 
+                        transparent 70%)`
+                }}
             />
             
             <div className="absolute inset-0">
