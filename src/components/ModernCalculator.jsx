@@ -9,8 +9,9 @@ const ModernCalculator = () => {
     const [history, setHistory] = useState("");
     const [allHistory, setAllHistory] = useState([]);
     const [showHistory, setShowHistory] = useState(false)
-
     const Display = (key) => {
+
+        
 
         if (key === "="){
 
