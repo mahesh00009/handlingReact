@@ -120,7 +120,7 @@ const useFormValidation = (initialState) => {
     setTouched({});
     setIsSubmitting(false);
     setIsValid(false);
-    console.log("Form reset. New formData:", initialState); // Added for debugging
+    console.log("Form reset. New formData:", initialState); 
   };
 
   const setFieldValue = (fieldName, value) => {
