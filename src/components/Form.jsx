@@ -18,11 +18,16 @@ const Form = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(() => {
+    
+    // Check if form is valid before submitting
+    if (isValid) {
       console.log("Form is valid! Submitting data:", formData);
       alert("Form submitted successfully! Check console for data.");
       resetForm();
-    });
+    } else {
+      // This will trigger validation and show errors
+      handleSubmit(e);
+    }
   };
 
   const handleAutofill = () => {
@@ -34,6 +39,8 @@ const Form = () => {
     setFieldValue("phoneNumber", "9876543210");
     setFieldValue("zipCode", "90210");
     setFieldValue("gender", "female");
+    setFieldValue("password", "password123");
+    setFieldValue("confirmPassword", "password123");
   };
 
   const handleServerError = () => {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const useFormValidation = (initialState) => {
+const useFormValidation = (initialState, onSubmitCallback) => {
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -35,7 +35,7 @@ const useFormValidation = (initialState) => {
     }
 
     if (!values.countryCode) {
-        newErrors.countryCode = "Country Code is required";
+      newErrors.countryCode = "Country Code is required";
     }
 
     if (!values.phoneNumber.trim()) {
@@ -61,9 +61,9 @@ const useFormValidation = (initialState) => {
     }
 
     if (!values.zipCode.trim()) {
-        newErrors.zipCode = "Zip Code is required";
+      newErrors.zipCode = "Zip Code is required";
     } else if (!/^\d{5}(-\d{4})?$/.test(values.zipCode.trim())) {
-        newErrors.zipCode = "Invalid Zip Code format";
+      newErrors.zipCode = "Invalid Zip Code format";
     }
 
     return newErrors;
@@ -78,11 +78,11 @@ const useFormValidation = (initialState) => {
   }, [errors]);
 
   const handleChange = (e) => {
-    const { name, value, type } = e.target;
+    const { name, value, type, checked } = e.target;
 
     setFormData((prev) => {
-      if (type === "radio") {
-        return { ...prev, [name]: value };
+      if (type === "checkbox") {
+        return { ...prev, [name]: checked };
       }
       return { ...prev, [name]: value };
     });
@@ -93,7 +93,10 @@ const useFormValidation = (initialState) => {
     setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
-  const handleSubmit = (callback) => {
+  const handleSubmit = async (event) => {
+    if (event) {
+      event.preventDefault();
+    }
     setIsSubmitting(true);
     const allFieldsTouched = Object.keys(formData).reduce((acc, key) => {
       acc[key] = true;
@@ -105,10 +108,13 @@ const useFormValidation = (initialState) => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      setTimeout(() => {
-        callback();
+      try {
+        await onSubmitCallback(formData);
         setIsSubmitting(false);
-      }, 500);
+      } catch (error) {
+        setIsSubmitting(false);
+        console.error("Submission error:", error);
+      }
     } else {
       setIsSubmitting(false);
     }
@@ -120,7 +126,6 @@ const useFormValidation = (initialState) => {
     setTouched({});
     setIsSubmitting(false);
     setIsValid(false);
-    console.log("Form reset. New formData:", initialState); 
   };
 
   const setFieldValue = (fieldName, value) => {
@@ -134,7 +139,7 @@ const useFormValidation = (initialState) => {
       acc[key] = true;
       return acc;
     }, {});
-    setTouched(prev => ({ ...prev, ...touchedFields }));
+    setTouched((prev) => ({ ...prev, ...touchedFields }));
   };
 
   return {
