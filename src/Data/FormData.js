@@ -2,7 +2,6 @@
 
 
 export const data = {
-
     firstName: "",
     middleName: "",
     lastName: "",
@@ -10,5 +9,4 @@ export const data = {
     email: "",
     phoneNumber : "",
     zipCode: ""
-
 }
