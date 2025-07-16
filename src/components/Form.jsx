@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { data } from "../Data/FormData";
 import useFormValidation from "../Data/useFormValidation";
+import { countryPhoneCodes } from "../Data/CountryCode";
 
 const Form = () => {
   const {
@@ -203,37 +204,9 @@ const Form = () => {
                 onBlur={handleBlur}
                 value={formData.countryCode}
               >
-                <option value="">Select Code</option>
-                <option value="+1">+1 (USA / Canada)</option>
-                <option value="+91">+91 (India)</option>
-                <option value="+977">+977 (Nepal)</option>
-                <option value="+44">+44 (United Kingdom)</option>
-                <option value="+61">+61 (Australia)</option>
-                <option value="+81">+81 (Japan)</option>
-                <option value="+49">+49 (Germany)</option>
-                <option value="+33">+33 (France)</option>
-                <option value="+86">+86 (China)</option>
-                <option value="+55">+55 (Brazil)</option>
-                <option value="+27">+27 (South Africa)</option>
-                <option value="+34">+34 (Spain)</option>
-                <option value="+7">+7 (Russia)</option>
-                <option value="+82">+82 (South Korea)</option>
-                <option value="+39">+39 (Italy)</option>
-                <option value="+234">+234 (Nigeria)</option>
-                <option value="+62">+62 (Indonesia)</option>
-                <option value="+63">+63 (Philippines)</option>
-                <option value="+966">+966 (Saudi Arabia)</option>
-                <option value="+90">+90 (Turkey)</option>
-                <option value="+971">+971 (UAE)</option>
-                <option value="+60">+60 (Malaysia)</option>
-                <option value="+65">+65 (Singapore)</option>
-                <option value="+351">+351 (Portugal)</option>
-                <option value="+31">+31 (Netherlands)</option>
-                <option value="+46">+46 (Sweden)</option>
-                <option value="+41">+41 (Switzerland)</option>
-                <option value="+48">+48 (Poland)</option>
-                <option value="+420">+420 (Czech Republic)</option>
-                <option value="+30">+30 (Greece)</option>
+                {countryPhoneCodes.map((item, index) => {
+                  return <option key = {index} value={item.code}>{`${item.code} ${item.country}`}</option>
+                })}
               </select>
               {touched.countryCode && errors.countryCode && (
                 <p className="text-red-500 text-xs mt-1">
